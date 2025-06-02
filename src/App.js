@@ -14,16 +14,23 @@ function App() {
 
   const API_KEY = "6a56952c42ce7399b6f84aebc011b7bd"; // Replace with your own key
 
+  // Load recent cities from localStorage once on mount
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("recentCities")) || [];
     setRecentCities(stored);
-  }, [recentCities]);
+  }, []);
 
+  // Update recent cities and fetch weather on search change
   useEffect(() => {
     if (!search) return;
-    const updated = [search, ...recentCities.filter((c) => c !== search)].slice(0, 5);
-    setRecentCities(updated);
-    localStorage.setItem("recentCities", JSON.stringify(updated));
+
+    // Use functional state update to avoid adding recentCities to deps
+    setRecentCities((prevCities) => {
+      const updated = [search, ...prevCities.filter((c) => c !== search)].slice(0, 5);
+      localStorage.setItem("recentCities", JSON.stringify(updated));
+      return updated;
+    });
+
     fetchWeather(search);
   }, [search]);
 
@@ -54,6 +61,7 @@ function App() {
     }
   };
 
+  // Convert sunrise/sunset UNIX timestamps to readable time
   const formatTime = (timestamp) => {
     return new Date(timestamp * 1000).toLocaleTimeString();
   };
@@ -62,47 +70,54 @@ function App() {
     <div className={`App ${darkMode ? "dark" : "light"}`}>
       <h1>🌤️ Weather App</h1>
 
-      <button className="mode-toggle" onClick={() => setDarkMode(!darkMode)}>
+      <button onClick={() => setDarkMode(!darkMode)} style={{ marginBottom: "10px" }}>
         {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
       </button>
 
-      <div className="search-container">
+      <div>
         <input
           type="text"
           placeholder="Enter city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="city-input"
-          onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
+          style={{ padding: "8px", width: "200px", marginRight: "8px" }}
         />
-        <button className="search-button" onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
 
       {recentCities.length > 0 && (
-        <div className="recent-searches">
+        <div style={{ marginTop: "20px" }}>
           <strong>Recent Searches:</strong>
-          <ul>
+          <ul style={{ listStyle: "none", padding: 0 }}>
             {recentCities.map((item, index) => (
               <li key={index}>
-                <button className="recent-button" onClick={() => handleRecentClick(item)}>
-                  {item}
-                </button>
+                <button onClick={() => handleRecentClick(item)}>{item}</button>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      <div className="weather-info">
+      <div style={{ marginTop: "30px" }}>
         {loading && <p>Loading weather...</p>}
-        {error && <p className="error">{error}</p>}
+        {error && <p>{error}</p>}
         {data && (
-          <div className="weather-box">
-            <h2>{data.name}, {data.sys.country}</h2>
+          <div
+            style={{
+              border: "1px solid #ccc",
+              padding: "20px",
+              borderRadius: "10px",
+              maxWidth: "400px",
+              margin: "auto",
+              backgroundColor: darkMode ? "#333" : "#f9f9f9",
+            }}
+          >
+            <h2>
+              {data.name}, {data.sys.country}
+            </h2>
             <img
               src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
               alt={data.weather[0].description}
-              className="weather-icon"
             />
             <p>🌡️ Temp: {data.main.temp} °C</p>
             <p>🌡️ Feels Like: {data.main.feels_like} °C</p>
