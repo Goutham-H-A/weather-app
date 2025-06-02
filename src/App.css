@@ -1,38 +1,189 @@
+/* General styles */
 .App {
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 15px;
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.light {
+  background-color: #f5f5f5;
+  color: #000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.dark {
+  background-color: #121212;
+  color: #fff;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Mode toggle button */
+.mode-toggle {
+  padding: 8px 16px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.dark .mode-toggle {
+  background-color: #333;
+  color: #fff;
+}
+
+.mode-toggle:hover {
+  background-color: #bbb;
+}
+
+.dark .mode-toggle:hover {
+  background-color: #555;
+}
+
+/* Search container */
+.search-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-bottom: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.city-input {
+  padding: 10px;
+  font-size: 16px;
+  width: 220px;
+  border-radius: 8px;
+  border: 1px solid #999;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.city-input:focus {
+  border-color: #555;
+}
+
+.dark .city-input {
+  background-color: #222;
+  border-color: #555;
+  color: #eee;
+}
+
+.search-button {
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #4285f4;
   color: white;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.search-button:hover {
+  background-color: #3367d6;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Recent searches */
+.recent-searches {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.recent-searches strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.recent-searches ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.recent-searches li {
+  margin: 0;
+}
+
+.recent-button {
+  background-color: transparent;
+  border: 1px solid #666;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.recent-button:hover {
+  background-color: #ddd;
+}
+
+.dark .recent-button:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Weather info box */
+.weather-info {
+  margin-top: 10px;
+}
+
+.weather-box {
+  border: 1px solid #ccc;
+  padding: 25px 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.dark .weather-box {
+  background-color: #333;
+  border-color: #555;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: #c62828;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .search-container {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+
+  .city-input {
+    width: 100%;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .weather-box {
+    width: 90%;
+  }
+
+  .recent-searches ul {
+    justify-content: center;
   }
 }

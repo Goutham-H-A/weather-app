@@ -1,0 +1,14 @@
+.footer {
+  margin-top: 40px;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  border-top: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.dark .footer {
+  color: #bbb;
+  border-color: #555;
+}
