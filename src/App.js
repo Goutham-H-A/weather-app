@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import Footer from "./Footer";
 
 function App() {
   const [city, setCity] = useState("");
@@ -116,8 +115,6 @@ function App() {
           </div>
         )}
       </div>
-      <Footer />
-
     </div>
   );
 }
