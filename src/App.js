@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("recentCities")) || [];
     setRecentCities(stored);
-  }, []);
+  }, [recentCities]);
 
   useEffect(() => {
     if (!search) return;
